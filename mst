@@ -1,0 +1,27 @@
+#!/bin/bash
+
+echo "
+Speed test starting - Please wait.
+"
+
+speedtest > /tmp/speedtest
+cat /tmp/speedtest | grep Testing\ from | rev | cut -c 4- | rev | boxes -p h0v0
+echo "
+Result 1:"
+cat /tmp/speedtest | grep load:
+
+speedtest > /tmp/speedtest
+echo "
+Result 2:"
+cat /tmp/speedtest | grep load:
+
+speedtest > /tmp/speedtest
+echo "
+Result 3:"
+cat /tmp/speedtest | grep load:
+
+rm /tmp/speedtest
+
+# Notes: Take input for number of times to run. Display all results as well as highest and lowest for each.
+#	Put in mechanism to check for required dependancies and install them if required.
+# Put in variable for number of tests to run

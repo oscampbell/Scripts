@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# valid-date -- Validates a day, taking into account leap year rules.
+
+normdate="normdate" # Do I need this??
+
+exceedsDaysInMonth()
+{
+	# Given a month name and day number in that month, this function will
+	#   return 0 if the specified day value is less than or equal to the 
+	#   max days in the month; 1 otherwise.
+
+	case $(echo $1 | tr '[:upper:]' '[:lower:]') in
+		jan* ) days=31	;;	feb* ) days=28 ;;
+		mar* ) days=31	;;	apr* ) days=30 ;;
+		may* ) days=31	;;	jun* ) days=30 ;;
+		jul* ) days=31	;;	aug* ) days=31 ;;
+		sep* ) days=30	;;	oct* ) days=31 ;;
+		nov* ) days=30	;;	dec* ) days=31 ;;
+		   * ) echo "$0: Unknown month name $1" >&2
+			   exit 1
+	esac
+
+	
+}

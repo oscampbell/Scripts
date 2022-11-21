@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo 'Local address: ' 
+hostname -I | awk '{print $1}'
+
+echo '
+Public address: '
+curl ifconfig.me
+echo '
+'

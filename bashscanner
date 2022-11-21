@@ -1,0 +1,34 @@
+#!/bin/bash
+
+is_alive_ping()
+{
+  ping -c 1 $1 > /dev/null
+  [ $? -eq 0 ] && echo Node with IP: $i is up. 
+}
+
+## Get user input for network portion of address
+
+echo "
+This script scans host addresses 1-254 of the network specified.
+
+Input network portion of subnet to scan (EG: 192.168.1):"
+
+read varaddr
+
+echo "
+"
+echo "Scanning" | boxes 
+echo "
+"
+
+for i in $varaddr.{1..254}
+do
+is_alive_ping $i & disown 
+done
+
+sleep 5
+
+echo "
+Scan complete!"
+
+## Can I ask at user input wheather to use the address from an interface? 

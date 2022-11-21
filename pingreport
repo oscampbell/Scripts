@@ -1,0 +1,30 @@
+#! /bin/bash
+
+is_alive_ping()
+{
+  ping -c 1 $1 > /dev/null
+  [ $? -eq 0 ] && echo Node with IP: $i is up.
+}
+
+echo "Please enter outlet you are testing from:"
+
+read varoutlet
+
+echo "
+Input network portion of subnet to scan (EG: 192.168.1):"
+
+read varaddr
+
+echo " "
+
+echo "Ping from outlet $varoutlet" | boxes
+
+for i in $varaddr.{1..254}
+do
+is_alive_ping $i & disown
+done
+
+sleep 5
+
+echo "
+Scan complete!"
