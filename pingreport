@@ -1,5 +1,8 @@
 #! /bin/bash
 
+## improvements: make options for the variables with -ip and -p
+##               make the defaut IP to be taken from the ip a output
+
 is_alive_ping()
 {
   ping -c 1 $1 > /dev/null
