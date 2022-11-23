@@ -1,33 +1,83 @@
 #! /bin/bash
 
-## improvements: make options for the variables with -ip and -p
-##               make the defaut IP to be taken from the ip a output
+############################################################
+############################################################
+# Functions                                                #
+############################################################
+############################################################
 
 is_alive_ping()
 {
-  ping -c 1 $1 > /dev/null
+  ping -c 3 $1 > /dev/null
   [ $? -eq 0 ] && echo Node with IP: $i is up.
 }
 
-echo "Please enter outlet you are testing from:"
 
-read varoutlet
+Help()
+{
+   # Display Help
+   echo "Written by Oliver Campbell [os.campbell@protonmail.com]"
+   echo
+   echo "This script will ping all hosts in your spcified netowrk (/24 only)"
+   echo "and print out the public IP, ISP and a speed test."
+   echo
+   echo "Syntax:"
+   echo "pingreport [IP address (network portion)] [Outlet or port]"
+   echo
+   echo "Example:"
+   echo "pingreport 192.168.1 G/001"
+   echo
+}
 
-echo "
-Input network portion of subnet to scan (EG: 192.168.1):"
+############################################################
+############################################################
+# Main program                                             #
+############################################################
+############################################################
 
-read varaddr
+############################################################
+# Process the input options. Add options as needed.        #
+############################################################
 
-echo " "
+# Get the options
+while getopts ":hn:" option; do
+   case $option in
+      h) # display Help
+         Help
+         exit;;
+     \?) # Invalid option
+         echo "Error: Invalid option, try with -h"
+         exit;;
+   esac
+done
 
-echo "Ping from outlet $varoutlet" | boxes
 
-for i in $varaddr.{1..254}
+
+echo "Ping sweep from outlet $2" | boxes
+
+for i in $1.{1..254}
 do
 is_alive_ping $i & disown
 done
 
-sleep 5
+sleep 10
+
+echo
+# Speed test
+
+speedtest > /tmp/speedtest
+echo "Public IP:"
+cat /tmp/speedtest | grep Testing\ from | rev | cut -c 4- | rev | cut -c 14-
+echo "
+Speed test:"
+cat /tmp/speedtest | grep load:
+rm /tmp/speedtest
 
 echo "
 Scan complete!"
+
+
+
+
+## improvements: make options for the variables with -ip and -p
+##               make the defaut IP to be taken from the ip a output
