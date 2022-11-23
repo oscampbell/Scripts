@@ -1,4 +1,0 @@
-#!/bin/bash
-
-echo "Public IP:" &&  curl ifconfig.me
-echo ""
