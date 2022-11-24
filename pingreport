@@ -80,4 +80,8 @@ Scan complete!"
 
 
 ## improvements: make options for the variables with -ip and -p
-##               make the defaut IP to be taken from the ip a output
+##               make the defaut IP to be taken from the ifconfig output
+##               check for boxes dependency and run without it if missing
+##               figure out a way to sort the ping responses numberically
+##               check for speedtest dependency
+##               remove the pointless rev's from the speedtest output
