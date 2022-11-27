@@ -35,6 +35,10 @@ Help()
 ############################################################
 ############################################################
 
+# Start the speedtest so we dont have to wait for it to run later
+mkdir /tmp/pingreport
+speedtest > /tmp/pingreport/speedtest &
+
 ############################################################
 # Process the input options. Add options as needed.        #
 ############################################################
@@ -60,18 +64,18 @@ do
 is_alive_ping $i & disown
 done
 
-sleep 10
+sleep 35
 
 echo
-# Speed test
 
-speedtest > /tmp/speedtest
+# Speed test results
+
 echo "Public IP:"
-cat /tmp/speedtest | grep Testing\ from | rev | cut -c 4- | rev | cut -c 14-
+cat /tmp/pingreport/speedtest | grep Testing\ from | cut -c 14- | rev | cut -c 4- | rev
 echo "
 Speed test:"
-cat /tmp/speedtest | grep load:
-rm /tmp/speedtest
+cat /tmp/pingreport/speedtest | grep load:
+rm /tmp/pingreport -r
 
 echo "
 Scan complete!"
@@ -84,4 +88,3 @@ Scan complete!"
 ##               check for boxes dependency and run without it if missing
 ##               figure out a way to sort the ping responses numberically
 ##               check for speedtest dependency
-##               remove the pointless rev's from the speedtest output
