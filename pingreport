@@ -36,7 +36,7 @@ Help()
 ############################################################
 
 # Start the speedtest so we dont have to wait for it to run later
-mkdir /tmp/pingreport
+mkdir /tmp/pingreport 2>/dev/null
 speedtest > /tmp/pingreport/speedtest &
 
 ############################################################
